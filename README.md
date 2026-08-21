@@ -1,6 +1,6 @@
 # detect-claude-code-conflicts
 
-A [Claude Code](https://code.claude.com/docs) skill that checks your `CLAUDE.md`, rules, and output styles against the harness system prompt baked into the installed CLI, and reports where they conflict.
+A [Claude Code](https://code.claude.com/docs) skill that checks your CLAUDE.md, rules, and output styles against the harness system prompt baked into the installed CLI, and reports where they conflict.
 
 The harness prompt is rewritten with every CLI release, and your local config is written blind to it. Where a local directive and a harness directive both fire on one situation and point at different outcomes, the model picks one arbitrarily — the defect shows up as inconsistent behaviour, not as a config error. This skill finds those pairs for the installed version and records which version was checked, so a version bump tells you exactly what to re-check.
 
@@ -20,9 +20,20 @@ Every finding quotes both sides in full, states the concrete situation where the
 
 ## Install
 
+As a plugin, with versioned updates:
+
+```
+/plugin marketplace add jackawatts/detect-claude-code-conflicts
+/plugin install detect-claude-code-conflicts@detect-claude-code-conflicts
+```
+
+Or as a plain skill directory:
+
 ```bash
 git clone https://github.com/jackawatts/detect-claude-code-conflicts ~/.claude/skills/detect-claude-code-conflicts
 ```
+
+Either way the skill is invoked the same; pick one route, not both.
 
 ## Use
 

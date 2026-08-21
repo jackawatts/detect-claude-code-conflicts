@@ -1,0 +1,6 @@
+{
+  "name": "detect-claude-code-conflicts",
+  "description": "Detect conflicts between your CLAUDE.md, rules, and output styles and the harness system prompt of the installed Claude Code CLI",
+  "version": "1.0.0",
+  "author": { "name": "Jack Watts" }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "detect-claude-code-conflicts",
+  "owner": {
+    "name": "Jack Watts"
+  },
+  "plugins": [
+    {
+      "name": "detect-claude-code-conflicts",
+      "description": "Detect conflicts between your CLAUDE.md, rules, and output styles and the harness system prompt of the installed Claude Code CLI",
+      "source": "./"
+    }
+  ],
+  "metadata": {
+    "description": "Skills for keeping Claude Code local config honest against the harness"
+  }
+}
