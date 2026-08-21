@@ -162,6 +162,15 @@ function canOpenLiteral(buf: Buffer, at: number): boolean {
   return KEYWORDS.has(buf.subarray(i + 1, end).toString('latin1'))
 }
 
+const CLOSERS = new Set([...',)];}:.?+`&|=!<>', '\n'].map((character) => character.charCodeAt(0)))
+
+// Code punctuation follows a real closing quote; prose follows an apostrophe.
+function canCloseLiteral(buf: Buffer, at: number): boolean {
+  let i = at + 1
+  while (i < buf.length && (buf[i] === 0x20 || buf[i] === 0x09)) i += 1
+  return i >= buf.length || CLOSERS.has(buf[i] ?? 0)
+}
+
 function candidateOpens(buf: Buffer, offset: number): { start: number; quote: number }[] {
   const opens: { start: number; quote: number }[] = []
   const floor = Math.max(0, offset - MAX_LITERAL)
@@ -182,6 +191,7 @@ function extract(buf: Buffer, anchor: string): Span | null {
     for (const { start, quote } of candidateOpens(buf, offset)) {
       const end = quote === BACKTICK ? endOfTemplate(buf, start) : skipQuoted(buf, start, quote)
       if (end === -1 || end <= offset) continue
+      if (!canCloseLiteral(buf, end)) continue
       const raw = buf.subarray(start + 1, end).toString('utf8')
       if (!raw.includes(anchor) && !raw.includes(escaped)) continue
       const text = unescape(raw)
