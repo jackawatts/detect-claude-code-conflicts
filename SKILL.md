@@ -1,6 +1,6 @@
 ---
 name: detect-claude-code-conflicts
-description: Check this repo's CLAUDE.md, rules, and output styles against the installed Claude Code harness prompt for conflicts. Use for "check my config against the harness", "did the CLI update break a rule", "detect claude code conflicts", or after a Claude Code version bump.
+description: Check your CLAUDE.md, rules, and output styles against the installed Claude Code harness prompt for conflicts. Use for "check my config against the harness", "did the CLI update break a rule", "detect claude code conflicts", or after a Claude Code version bump.
 ---
 
 # Detect Claude Code conflicts
@@ -23,7 +23,7 @@ Record the version with `claude --version`, then extract into the version folder
   --baseline <root>/claude-code-conflict-findings/<previous version>/system-prompt.md.manifest.json
 ```
 
-A complete run writes `<out>.manifest.json` beside the extract: one entry per section, with its length and a hash. A run that missed a section writes no manifest, so a partial extract cannot seed the next comparison. `--baseline` compares against an earlier manifest and prints what drifted. Omit it on the first run for a machine and say so in the report.
+A complete run writes `<out>.manifest.json` beside the extract, and `--baseline` compares against an earlier manifest and prints what drifted; `extraction.md` (Drift between releases) owns the detail. Omit `--baseline` on the first run for a machine and say so in the report.
 
 Read the run before continuing:
 
