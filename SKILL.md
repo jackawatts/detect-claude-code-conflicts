@@ -27,7 +27,7 @@ A complete run writes `<out>.manifest.json` beside the extract: one entry per se
 
 Read the run before continuing:
 
-- **MISS, exit 1** — a declared section no longer resolves, because the release moved or reworded its opening. Stop. A partial extract cannot support a clean verdict, and the missing section is exactly where a new contradiction would hide. Repair the anchor first; `extraction.md` covers how resolution works and the failure modes that produce plausible-but-wrong output.
+- **MISS, exit 1** — a declared section no longer resolves, because the release moved or reworded its opening. Stop. A partial extract cannot support a clean verdict, and the missing section is exactly where a new contradiction would hide. Repair the anchor first with the recipe in `extraction.md` (Repairing an anchor), which also covers the failure modes that produce plausible-but-wrong output.
 - **changed** — the section still resolves but its text moved. Expected across an upgrade, and the signal to re-read that section rather than trusting the last version's conclusions about it.
 - **new or gone** — the anchor list changed shape. Confirm that was your edit and not a mis-resolution.
 

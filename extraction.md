@@ -71,6 +71,16 @@ In the config repo this skill ships from, `tests/scripts/extract-system-prompt.t
 
 Anchor length is the defence against a mis-resolution. A short anchor can start matching a different literal after a release rewords its neighbourhood, and that failure prints `emit` rather than `MISS`. Prefer an anchor long enough to be unique to its section, and check the drift report's character counts when one is necessarily short.
 
+## Repairing an anchor
+
+Follow this when a section reports `MISS`, or step 2 finds live prompt text with no anchor. Every repair is an edit to `SECTIONS` in `extract-system-prompt.ts`; nothing else changes.
+
+1. **Find the surviving wording.** For a MISS, locate the section in the live prompt or the previous version's extract, then grep the binary for phrases from it, longest first: `grep -ac "<phrase>" <binary>`. Zero hits for every phrase means the section was removed or repackaged, not reworded — stop and report rather than forcing an anchor.
+2. **Check the occurrence count.** Most phrases occur 2-8 times (code, source maps, sibling variants). That is fine; resolution filters candidates. What matters is uniqueness to the *section*: a phrase that also opens a different section or a variant of this one will resolve the wrong literal.
+3. **Prefer the section's heading or opening sentence.** A `# Heading` anchor resolves the literal from its start and captures the whole section. A mid-section phrase resolves whatever smallest literal contains it, which is how a sentence-level anchor once matched a sibling variant (`# Text output`) instead of the live section.
+4. **Re-run and read three signals.** The section must `emit` (or `dup` into a section it genuinely shares a literal with); its character count must be plausible against the live text, not a fragment; and the `--baseline` drift report must show only the sections you expect to change.
+5. **Confirm coverage.** Diff the extract against the live prompt one more time (step 2 of the skill). A repair that resolves cleanly can still be the wrong span — the count and the content are the check, not the exit code.
+
 ## What the output cannot tell you
 
 - **Interpolations stay unresolved.** The output keeps `${WTl}`, `${e}` for the scratchpad path, the model-roster `.map()` expression, and the `${Ri}`/`${Ls}`/`${Hl}`/`${bu}` tool-name slots. Those values exist only at runtime, and filling them in would substitute one session's values for what the binary holds.
